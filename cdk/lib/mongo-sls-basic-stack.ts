@@ -1,8 +1,7 @@
 // // This CDK L3 example creates a MongoDB Atlas project, cluster, databaseUser, and projectIpAccessList
 import { Stack,
   StackProps,
-  Tags,
-  aws_secretsmanager as secretmanager
+  Tags
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { AtlasServerlessBasic, ServerlessInstanceProviderSettingsProviderName } from 'awscdk-resources-mongodbatlas';
@@ -13,17 +12,18 @@ export interface AtlasServerlessStackProps extends StackProps {
   readonly profile: string;
   readonly projectId: string;
   readonly region: string;
-  readonly Ip: string;
+  readonly Ip?: string;
+  readonly gqlVpcCidr?: string;
 }
 
-export class MongoServerlessExampleStack extends Stack {
+export class MongoAtlasSlsClusterStack extends Stack {
   constructor(scope: Construct, id: string, props: AtlasServerlessStackProps) {
     super(scope, id, props);
 
     Tags.of(this).add('env', props.environment);
-    Tags.of(this).add('service', 'mongo-serverless-example');
+    Tags.of(this).add('service', 'qa-abu-mongo-atlas-sls');
 
-    new AtlasServerlessBasic(this, 'EntitlementsServerlessMongo', {
+    new AtlasServerlessBasic(this, 'MongoSlsClusterBasic', {
       serverlessProps: {
         projectId: props.projectId,
         profile: props.profile,
@@ -33,8 +33,8 @@ export class MongoServerlessExampleStack extends Stack {
             ServerlessInstanceProviderSettingsProviderName.SERVERLESS,
             regionName: props.region,
         },
-        // > name refers to -> database name in mongo console
-        name: 'mongo-serverless-example-db',
+        // > name refers to -> database cluster name in mongo console
+        name: 'bytedb-sls',
         terminationProtectionEnabled: true,
       },
       projectProps: {
@@ -42,8 +42,9 @@ export class MongoServerlessExampleStack extends Stack {
       },
       profile: props.profile,
       ipAccessListProps: {
+        // access list is a required key to create a serverless cluster
         accessList:[{
-            ipAddress: props.Ip,
+            ipAddress: props.Ip || '0.0.0.0/1',
             comment: 'Allowed ip to access'
           }
         ]

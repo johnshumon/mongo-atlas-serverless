@@ -20,11 +20,6 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "typeRoots": [
       "./node_modules/@types"
     ]
