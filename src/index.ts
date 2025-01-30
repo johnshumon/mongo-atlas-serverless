@@ -17,7 +17,7 @@ const httpServer = http.createServer((req, res) => {
   }
 
   res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ message: 'Hello Mongo Atlas Serverless!' }));
+  res.end(JSON.stringify({ message: 'Welcome to Mongo Atlas Serverless demo!' }));
 });
 
 async function startServer() {

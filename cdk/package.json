@@ -2,7 +2,7 @@
   "name": "mongo-sls-basic-infra",
   "version": "1.0.0",
   "bin": {
-    "mongo-sls-basic": "bin/mongo-sls-basic.js"
+    "cdk": "bin/cdk.js"
   },
   "scripts": {
     "build": "tsc",

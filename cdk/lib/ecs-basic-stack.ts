@@ -20,7 +20,7 @@ export interface EcsBasicStackProps extends cdk.StackProps {
   vpcName: string;
 }
 
-export class BasicEcsStack extends cdk.Stack {
+export class EcsBasicStack extends cdk.Stack {
   constructor(
     scope: Construct,
     id: string,
